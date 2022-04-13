@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es2017",
+    "target": "es2018",
     "module": "commonjs",
-    "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
-    "baseUrl": ".",
+    "lib": ["dom", "es6", "es2018", "esnext.asynciterable"],
+    "baseUrl": "src",
+    "paths": {
+      "@config/*": ["config/*"]
+    },
     "skipLibCheck": true,
     "sourceMap": true,
     "rootDir": "./src",
@@ -24,6 +27,6 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", ".eslintrc.js"],
   "exclude": ["node_modules"],
 }

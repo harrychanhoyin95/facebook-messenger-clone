@@ -1,31 +1,52 @@
-/* eslint-disable no-var */
-import dotenv from 'dotenv';
-import express from 'express';
-import { Logger } from 'winston';
+import { ApolloServer, gql } from 'apollo-server';
 
-import { PORT } from './config/config';
+import loader from './loaders/loader';
 
-import logger from './utils/logger';
-import mongoManger from './utils/mongoManager';
+const typeDefs = gql`
+  type Book {
+    title: String
+    author: String
+  }
 
-declare global {
-  var Logger: Logger;
-}
+  type Query {
+    books: [Book]
+  }
+`;
 
-const startServer = () => {
-  const app = express();
-  global.Logger = logger;
-  dotenv.config();
-  mongoManger.connect();
+const books = [
+  {
+    title: 'The Awakening',
+    author: 'Kate Chopin',
+  },
+  {
+    title: 'City of Glass',
+    author: 'Paul Auster',
+  },
+];
 
-  app
-    .listen(PORT, () => {
-      Logger.info(`Server listening on port: ${PORT}`);
-    })
-    .on('error', (err) => {
-      logger.error(err);
-      process.exit(1);
-    });
+const resolvers = {
+  Query: {
+    books: () => books,
+  },
 };
 
-startServer();
+class Server {
+  private server: ApolloServer;
+  constructor() {
+    this.server = new ApolloServer({ typeDefs, resolvers });
+
+    new Promise((resolve) => {
+      resolve(loader());
+    }).then(() => {
+      this.startServer(this.server);
+    });
+  }
+
+  private startServer(server: ApolloServer) {
+    server.listen().then(({ url }) => {
+      Logger.info(`🚀  Server ready at ${url}`);
+    });
+  }
+}
+
+new Server();

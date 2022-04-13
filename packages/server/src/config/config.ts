@@ -10,5 +10,6 @@ function getEnvVar(v: string): string {
   return ret;
 }
 
-export const PORT: string = getEnvVar('PORT');
-export const MONGO_URI: string = getEnvVar('MONGO_URI');
+export const NEO_URI: string = getEnvVar('NEO_URI');
+export const NEO_USERNAME: string = getEnvVar('NEO_USERNAME');
+export const NEO_PASSWORD: string = getEnvVar('NEO_PASSWORD');

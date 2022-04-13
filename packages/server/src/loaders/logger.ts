@@ -2,7 +2,7 @@ import winston from 'winston';
 
 const { createLogger, format, transports } = winston;
 
-const logger = createLogger({
+const LoggerInstance: winston.Logger = createLogger({
   level: 'info',
   format: format.combine(
     format.colorize(),
@@ -15,7 +15,7 @@ const logger = createLogger({
     }),
   ),
   transports: [new transports.Console()],
-  defaultMeta: { service: 'chatbot-server' },
+  defaultMeta: { service: 'messenger-server' },
 });
 
-export default logger;
+export default LoggerInstance;
