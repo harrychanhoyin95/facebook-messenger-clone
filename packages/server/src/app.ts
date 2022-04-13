@@ -1,45 +1,30 @@
+import { Neo4jGraphQL } from '@neo4j/graphql';
 import { ApolloServer, gql } from 'apollo-server';
+import { GraphQLSchema } from 'graphql';
 
 import loader from './loaders/loader';
 
 const typeDefs = gql`
-  type Book {
-    title: String
-    author: String
+  type Movie {
+    title: String!
+    year: Int
+    plot: String
+    actors: [Person!]! @relationship(type: "ACTED_IN", direction: IN)
   }
 
-  type Query {
-    books: [Book]
+  type Person {
+    name: String!
+    movies: [Movie!]! @relationship(type: "ACTED_IN", direction: OUT)
   }
 `;
 
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-];
-
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
-};
-
 class Server {
-  private server: ApolloServer;
   constructor() {
-    this.server = new ApolloServer({ typeDefs, resolvers });
-
-    new Promise((resolve) => {
-      resolve(loader());
-    }).then(() => {
-      this.startServer(this.server);
-    });
+    loader()
+    const neoSchema = new Neo4jGraphQL({ typeDefs, driver: Driver });
+    neoSchema.getSchema().then((schema: GraphQLSchema) => {
+      this.startServer(new ApolloServer({ schema }));
+    })
   }
 
   private startServer(server: ApolloServer) {

@@ -1,5 +1,4 @@
-import neo4j from 'neo4j-driver';
-import { Driver } from 'neo4j-driver-core';
+import neo4j, { Driver } from 'neo4j-driver';
 
 import { NEO_URI, NEO_USERNAME, NEO_PASSWORD } from '@config/config';
 

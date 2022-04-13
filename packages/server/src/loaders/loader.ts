@@ -1,6 +1,6 @@
 /* eslint-disable no-var */
 import { Logger } from 'winston';
-import { Driver } from 'neo4j-driver-core';
+import { Driver } from 'neo4j-driver';
 
 import loggerLoader from './logger';
 import neo4jLoader from './neo4j';
@@ -12,7 +12,7 @@ declare global {
   var Driver: Driver;
 }
 
-export default async () => {
+export default () => {
   global.Logger = loggerLoader;
   Logger.info('🚀  Logger loaded!');
 
