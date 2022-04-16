@@ -20,11 +20,11 @@ const typeDefs = gql`
 
 class Server {
   constructor() {
-    loader()
+    loader();
     const neoSchema = new Neo4jGraphQL({ typeDefs, driver: Driver });
     neoSchema.getSchema().then((schema: GraphQLSchema) => {
       this.startServer(new ApolloServer({ schema }));
-    })
+    });
   }
 
   private startServer(server: ApolloServer) {

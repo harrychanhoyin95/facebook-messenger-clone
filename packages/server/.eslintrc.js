@@ -11,31 +11,13 @@ module.exports = {
     tsconfigRootDir: __dirname,
     ecmaVersion: 2020,
   },
-  plugins: ['@typescript-eslint', 'import'],
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-    'plugin:prettier/recommended',
-  ],
-  settings: {
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts'],
-    },
-    'import/resolver': {
-      typescript: {
-        alwaysTryTypes: true,
-        project: '.',
-      },
-    },
-  },
+  plugins: ['@typescript-eslint'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended', 'prettier'],
   rules: {
+    'prettier/prettier': 2,
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     '@typescript-eslint/no-var-requires': 0,
-    'import/no-unresolved': 'error',
     'no-console': 'error',
   },
 };
