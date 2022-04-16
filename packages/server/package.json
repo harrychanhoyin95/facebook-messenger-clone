@@ -4,7 +4,8 @@
   "main": "app.ts",
   "license": "MIT",
   "engines": {
-    "node": ">=8.10.0"
+    "node": ">=16.14.0",
+    "yarn": ">=1.22.18"
   },
   "scripts": {
     "start": "ts-node-dev -r tsconfig-paths/register src/app.ts",
